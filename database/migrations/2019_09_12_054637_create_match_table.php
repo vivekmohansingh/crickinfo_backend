@@ -19,6 +19,8 @@ class CreateMatchTable extends Migration
             $table->integer('team2_id');
             $table->timestamp('schedule_time');
             $table->integer('result');
+            $table->integer('team1_point');
+            $table->integer('team2_point');
             $table->timestamps();
         });
     }

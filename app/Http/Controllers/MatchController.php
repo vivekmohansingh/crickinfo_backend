@@ -18,7 +18,7 @@ class MatchController extends Controller
      *
      * @return void
      */
-    public function __construct(Matches $obj,MatchValidation $matchValidateObj)
+    public function __construct(Matches $obj,MatchValidationInterface $matchValidateObj)
     {
         $this->matchModel = $obj;
         $this->matchValidate = $matchValidateObj;
@@ -66,6 +66,8 @@ class MatchController extends Controller
        }else{
         if($validationFlag['errorcode'] == 400){
         return response('',Response::HTTP_BAD_REQUEST);                  
+        }else if($validationFlag['errorcode'] == 406){
+        return response('',Response::HTTP_NOT_ACCEPTABLE);                  
         }else{
         return response('',Response::HTTP_NOT_FOUND);        
         }

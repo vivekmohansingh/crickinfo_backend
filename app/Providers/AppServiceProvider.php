@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use App\validations\MatchValidation;
 use App\interfacerepo\MatchValidationInterface;
+use App\validations\Team;
+use App\interfacerepo\TeamInterface;
+
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\TeamController;
 
@@ -24,7 +27,8 @@ class AppServiceProvider extends ServiceProvider
             Illuminate\Contracts\Debug\ExceptionHandler::class,
             App\Exceptions\Handler::class
         );
-        //$this->app->singleton(MatchValidationInterface::class,MatchValidation::class);
+        $this->app->singleton(MatchValidationInterface::class,MatchValidation::class);
+        $this->app->singleton(TeamInterface::class,Team::class);
 
     }
 }

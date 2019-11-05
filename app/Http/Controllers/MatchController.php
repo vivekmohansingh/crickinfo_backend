@@ -1,20 +1,27 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\interfacerepo\MatchValidationInterface;
+use App\validations\MatchValidation;
 use App\Models\Matches;
+use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+
 class MatchController extends Controller
 {
   private $matchModel;
+  private $matchValidate;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(Matches $obj)
+    public function __construct(Matches $obj,MatchValidation $matchValidateObj)
     {
         $this->matchModel = $obj;
+        $this->matchValidate = $matchValidateObj;
     }
 
     public function getMatch($id = null) {
@@ -40,9 +47,31 @@ class MatchController extends Controller
     }
 
     public function createMatch(Request $request)
-    {
-      //print_r($request);die;
-      return $this->matchModel->createMatch($request->all());
+    {  
+      $emptyFlag = $this->matchValidate->isEmpty($request->all());
+
+      if($emptyFlag){
+        return response('',Response::HTTP_BAD_REQUEST);
+      }else{
+       $validationFlag =  $this->matchValidate->validateInputs($request->all());
+
+       if($validationFlag['out']){
+          $out = $this->matchValidate->checkIfMatchAlreadyExists($request->all());
+
+           if($out){
+               return response('',Response::HTTP_CONFLICT);        
+           }else{
+               return $this->matchModel->createMatch($request->all());      
+           }
+       }else{
+        if($validationFlag['errorcode'] == 400){
+        return response('',Response::HTTP_BAD_REQUEST);                  
+        }else{
+        return response('',Response::HTTP_NOT_FOUND);        
+        }
+       }
+      }
+      
     }
 
     public function updateMatch(Request $request,$team_id)

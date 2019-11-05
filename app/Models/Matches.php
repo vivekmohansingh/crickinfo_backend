@@ -1,5 +1,7 @@
 <?php
 namespace App\Models;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Matches extends Model {
@@ -57,6 +59,20 @@ class Matches extends Model {
             'team1_id' => $attributes['team1_id'],
             'team2_id' => $attributes['team2_id'],
             'schedule_time' => $attributes['schedule_time'],
-        ));
+        ));        
+       
+//       return response('',Response::HTTP_CONFLICT);
+    }
+
+    public function checkAlreadyMatchOnSameDate($attributes)
+    {
+      DB::connection()->enableQueryLog();
+      $team1 = $attributes['team1_id'];
+      $team2 = $attributes['team2_id'];
+      $date = date('Y-m-d',strtotime($attributes['schedule_time'])); 
+      return self::where('schedule_time','=',$date)->where(function($query) use ($team1,$team2){
+        $query->where('team1_id',$team1)
+        ->orWhere('team2_id',$team2);
+      })->get()->count();
     }
 }

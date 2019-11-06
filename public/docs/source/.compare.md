@@ -235,10 +235,10 @@ fetch(url, {
 ```
 
 
-> Example response (500):
+> Example response (401):
 
 ```json
-null
+[]
 ```
 
 ### HTTP Request
@@ -339,10 +339,10 @@ fetch(url, {
 ```
 
 
-> Example response (500):
+> Example response (401):
 
 ```json
-null
+[]
 ```
 
 ### HTTP Request
@@ -476,10 +476,10 @@ fetch(url, {
 ```
 
 
-> Example response (500):
+> Example response (401):
 
 ```json
-null
+[]
 ```
 
 ### HTTP Request
@@ -514,10 +514,10 @@ fetch(url, {
 ```
 
 
-> Example response (500):
+> Example response (401):
 
 ```json
-null
+[]
 ```
 
 ### HTTP Request
@@ -898,46 +898,6 @@ fetch(url, {
 
 <!-- END_88841ae2c6178e47b2a50244870e74e7 -->
 
-<!-- START_7414f305a7be9a02b100e5e54921b3bc -->
-## uploadPlayerImage method to upload image of a player
-
-> Example request:
-
-```bash
-curl -X GET -G "/api/player/1/uploadimage" 
-```
-
-```javascript
-const url = new URL("/api/player/1/uploadimage");
-
-let headers = {
-    "Accept": "application/json",
-    "Content-Type": "application/json",
-}
-
-fetch(url, {
-    method: "GET",
-    headers: headers,
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-> Example response (400):
-
-```json
-{
-    "message": "Bad Request"
-}
-```
-
-### HTTP Request
-`GET /api/player/{id}/uploadimage`
-
-
-<!-- END_7414f305a7be9a02b100e5e54921b3bc -->
-
 <!-- START_054b70662f264c4777a6720041c4858d -->
 ## getPlayerHistory method to get pistory of a player
 
@@ -971,25 +931,28 @@ fetch(url, {
     {
         "id": 1,
         "team_id": 1,
-        "f_name": "gaurav",
-        "l_name": "jain",
-        "imageuri": "abc",
-        "jersey_number": "1",
+        "f_name": "Mahendra Singh",
+        "l_name": "Dhoni",
+        "imageuri": "player.jpeg",
+        "jersey_number": "10",
         "country": "India",
         "created_at": null,
         "updated_at": null,
         "get_team": {
             "id": 1,
-            "name": "India",
-            "logo": "test",
-            "club": "Bigboss",
-            "created_at": null,
-            "updated_at": null
+            "name": "Chennai Super Kings",
+            "logo": "csk.jpeg",
+            "club": "Chennai",
+            "created_at": "2019-10-31 18:30:00",
+            "updated_at": "2019-10-31 18:30:00"
         },
         "player_Summary": {
-            "total_match": 2,
-            "total_run": "68",
-            "total_six": "4"
+            "total_match": 0,
+            "total_run": 0,
+            "total_six": 0,
+            "total_fifty": 0,
+            "total_hundrad": 0,
+            "hscore": null
         }
     }
 ]
@@ -1000,39 +963,6 @@ fetch(url, {
 
 
 <!-- END_054b70662f264c4777a6720041c4858d -->
-
-<!-- START_02c2425447157221a1450050f1ac7578 -->
-## uploadPlayerImage method to upload image of a player
-
-> Example request:
-
-```bash
-curl -X POST "/api/player/1/image" 
-```
-
-```javascript
-const url = new URL("/api/player/1/image");
-
-let headers = {
-    "Accept": "application/json",
-    "Content-Type": "application/json",
-}
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-
-### HTTP Request
-`POST /api/player/{id}/image`
-
-
-<!-- END_02c2425447157221a1450050f1ac7578 -->
 
 <!-- START_4f03c2d002e5e8e4b9cf61242a699a22 -->
 ## /api/match[/{id}]
@@ -1201,30 +1131,80 @@ fetch(url, {
 [
     {
         "id": 1,
-        "team1_name": "India",
-        "team1_logo": "test",
-        "team2_name": "Australia",
-        "team2_logo": "aust",
+        "team1_name": "Chennai Super Kings",
+        "team1_logo": "csk.jpeg",
+        "team2_name": "Mumbai Indians",
+        "team2_logo": "mumbai.jpeg",
         "schedule_time": "2019-09-16 18:30:00",
-        "result": 0
+        "result": 0,
+        "team1_point": 0,
+        "team2_point": 0
     },
     {
         "id": 2,
-        "team1_name": "India",
-        "team1_logo": "test",
-        "team2_name": "Australia",
-        "team2_logo": "aust",
-        "schedule_time": "2019-09-14 19:17:14",
-        "result": 1
+        "team1_name": "Chennai Super Kings",
+        "team1_logo": "csk.jpeg",
+        "team2_name": "Mumbai Indians",
+        "team2_logo": "mumbai.jpeg",
+        "schedule_time": "2019-11-03 16:51:24",
+        "result": 1,
+        "team1_point": 12,
+        "team2_point": 0
     },
     {
         "id": 3,
-        "team1_name": "SouthAfrica",
-        "team1_logo": "testAfrica",
-        "team2_name": "India",
-        "team2_logo": "test",
+        "team1_name": "Royal Challengers Banglore",
+        "team1_logo": "rcb.jpeg",
+        "team2_name": "Chennai Super Kings",
+        "team2_logo": "csk.jpeg",
         "schedule_time": "2019-09-24 18:30:00",
-        "result": 0
+        "result": 0,
+        "team1_point": 0,
+        "team2_point": 0
+    },
+    {
+        "id": 4,
+        "team1_name": "Chennai Super Kings",
+        "team1_logo": "csk.jpeg",
+        "team2_name": "Mumbai Indians",
+        "team2_logo": "mumbai.jpeg",
+        "schedule_time": "2019-12-25 00:00:00",
+        "result": 0,
+        "team1_point": 0,
+        "team2_point": 0
+    },
+    {
+        "id": 11,
+        "team1_name": "Chennai Super Kings",
+        "team1_logo": "csk.jpeg",
+        "team2_name": "Mumbai Indians",
+        "team2_logo": "mumbai.jpeg",
+        "schedule_time": "2019-11-04 00:00:00",
+        "result": 0,
+        "team1_point": 0,
+        "team2_point": 0
+    },
+    {
+        "id": 14,
+        "team1_name": "Chennai Super Kings",
+        "team1_logo": "csk.jpeg",
+        "team2_name": "Mumbai Indians",
+        "team2_logo": "mumbai.jpeg",
+        "schedule_time": "2019-11-28 00:00:00",
+        "result": 0,
+        "team1_point": 0,
+        "team2_point": 0
+    },
+    {
+        "id": 15,
+        "team1_name": "Chennai Super Kings",
+        "team1_logo": "csk.jpeg",
+        "team2_name": "Mumbai Indians",
+        "team2_logo": "mumbai.jpeg",
+        "schedule_time": "2019-11-26 00:00:00",
+        "result": 0,
+        "team1_point": 0,
+        "team2_point": 0
     }
 ]
 ```
@@ -1267,21 +1247,69 @@ fetch(url, {
 [
     {
         "id": 1,
-        "team1_name": "India",
-        "team1_logo": "test",
-        "team2_name": "Australia",
-        "team2_logo": "aust",
+        "team1_name": "Chennai Super Kings",
+        "team1_logo": "csk.jpeg",
+        "team2_name": "Mumbai Indians",
+        "team2_logo": "mumbai.jpeg",
         "schedule_time": "2019-09-16 18:30:00",
-        "result": 0
+        "result": 0,
+        "team1_point": 0,
+        "team2_point": 0
     },
     {
         "id": 3,
-        "team1_name": "SouthAfrica",
-        "team1_logo": "testAfrica",
-        "team2_name": "India",
-        "team2_logo": "test",
+        "team1_name": "Royal Challengers Banglore",
+        "team1_logo": "rcb.jpeg",
+        "team2_name": "Chennai Super Kings",
+        "team2_logo": "csk.jpeg",
         "schedule_time": "2019-09-24 18:30:00",
-        "result": 0
+        "result": 0,
+        "team1_point": 0,
+        "team2_point": 0
+    },
+    {
+        "id": 4,
+        "team1_name": "Chennai Super Kings",
+        "team1_logo": "csk.jpeg",
+        "team2_name": "Mumbai Indians",
+        "team2_logo": "mumbai.jpeg",
+        "schedule_time": "2019-12-25 00:00:00",
+        "result": 0,
+        "team1_point": 0,
+        "team2_point": 0
+    },
+    {
+        "id": 11,
+        "team1_name": "Chennai Super Kings",
+        "team1_logo": "csk.jpeg",
+        "team2_name": "Mumbai Indians",
+        "team2_logo": "mumbai.jpeg",
+        "schedule_time": "2019-11-04 00:00:00",
+        "result": 0,
+        "team1_point": 0,
+        "team2_point": 0
+    },
+    {
+        "id": 14,
+        "team1_name": "Chennai Super Kings",
+        "team1_logo": "csk.jpeg",
+        "team2_name": "Mumbai Indians",
+        "team2_logo": "mumbai.jpeg",
+        "schedule_time": "2019-11-28 00:00:00",
+        "result": 0,
+        "team1_point": 0,
+        "team2_point": 0
+    },
+    {
+        "id": 15,
+        "team1_name": "Chennai Super Kings",
+        "team1_logo": "csk.jpeg",
+        "team2_name": "Mumbai Indians",
+        "team2_logo": "mumbai.jpeg",
+        "schedule_time": "2019-11-26 00:00:00",
+        "result": 0,
+        "team1_point": 0,
+        "team2_point": 0
     }
 ]
 ```

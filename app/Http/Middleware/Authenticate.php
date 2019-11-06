@@ -46,7 +46,8 @@ class Authenticate
 
 Config::token;
         */ 
-        if(!empty($request->header('access_token') ) && $request->header('access_token') == env('ACCESS_TOKEN'))
+
+        if((!empty($request->header('access_token') ) && $request->header('access_token') == env('ACCESS_TOKEN')) || stripos($_SERVER['PATH_INFO'], 'documentation')!==false)
         {
             return $next($request);
         }

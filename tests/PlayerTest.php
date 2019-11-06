@@ -56,6 +56,6 @@ class PlayerTest extends TestCase
         $param = array("f_name"=>"unittest","l_name"=>"lplayer","jersey_number"=>"21","country"=>"India");
         $header = array('Content-Type'=>'application/json');
         $this->post('api/player/', $param, $header);
-        $this->seeStatusCode(401);
+        $this->seeStatusCode(400);
     }
 }

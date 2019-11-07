@@ -5,7 +5,7 @@ use App\Models\Players;
 use App\Models\Players_Summary;
 use Illuminate\Http\Request;
 /**
- * Player Controller class to handle all request coming from http router related to a player
+ * Player Controller class to handle all request coming from http router related to player
  */
 
     class PlayerController extends Controller
@@ -14,10 +14,9 @@ use Illuminate\Http\Request;
         private $PlayerSummary;
 
         /**
-             PlayerController class constructor
-            * @param PlayerInterface $player Object of PlayerInterface. Bind with actual implementation at run time.
-            * To check the actual implementation of the Interface see ServiceProvider class
-            * @return object of controller
+            * @param Object obj of Players model object
+            * @param Object objSummary Players_Summary model object.
+            * @return void nothing
         */
         public function __construct(Players $obj,Players_Summary $objSummary)
         {
@@ -26,10 +25,11 @@ use Illuminate\Http\Request;
         }
 
         /**
-         *  getPlayer method to get details of one player or multiple players if argument playerid is null
-         * @param string PlayerId Optional. Id of player for which we need to fetch detail. Pass null to get
+         *getPlayer method to get details of one player or multiple players based on playerid
+         * @param int id Optional. Id of player for which we need to fetch detail. Pass null to get
          * all players
-         * @return json response
+         * @return mixed ORM/response : player data or response object
+
          */
         public function getPlayer($id = null)
         {
@@ -55,61 +55,16 @@ use Illuminate\Http\Request;
         }
 
         /**
-         *  createPlayer method to Insert Player
-         * @param Request $request object of http request
-         * @return json response contain detail of newly inserted player
-         */
-        public function createPlayer(Request $request)
-        {
-          return $this->playerModel->createPlayer($request->all());
-        }
-
-        /**
-         *  updatePlayer method to update any detail of player
-         * @param Request $request object of http request
-         * @param string $player_id id of player that needs to update
-         * @return json response contain detail of updated player
-         */
-        public function updatePlayer(Request $request,$player_id)
-        {
-          return $this->playerModel->updatePlayer($player_id,$request->all());
-        }
-
-
-        /**
-         *  deletePlayer method to delete player
-         * @param string $player_id id of player that needs to be deleted
-         * @return json response
-         */
-        public function deletePlayer($player_id)
-        {
-          return $this->playerModel->deletePlayer($player_id);
-        }
-
-        /**
-         *  uploadPlayerImage method to upload image of a player
-         * @param Request $request object of http request
-         * @param string $player_id id of player that needs to be deleted
-         * @return json response
-         */
-/*        public function uploadPlayerImage(Request $request,$player_id)
-        {
-            $objImage = $request->file('image');
-            return $this->playerModel->uploadimage($objImage, $player_id);
-        }*/
-
-        /**
-         *  getPlayerHistory method to get pistory of a player
+         * getPlayerHistory method to get summary of a player
          * @param string $id id of player
-         * @return json response
+         * @return array player_detail player details
          */
         public function getPlayerHistory($id)
         {
 
           $player_id = $id;
           $player_detail = json_decode($this->playerModel->getPlayer($player_id),true);
-          
-          //return $this->PlayerSummary->getSummary($player_id);
+          //merge data in player summary
           $player_detail[0]['player_Summary'] = $this->playerSummary->getPlayerSummary($player_id);
           //dd($player_detail);
           return $player_detail;          

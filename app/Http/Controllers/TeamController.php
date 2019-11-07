@@ -1,5 +1,9 @@
 <?php
-
+    /**
+     * This class id mainly responsible for Team controller to handle all team API requests
+     *
+     * 
+     */
 namespace App\Http\Controllers;
 
 use App\Models\Teams;
@@ -11,14 +15,14 @@ class TeamController extends Controller
   private $teamModel;
   private $playerModel;
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * @param object team Teams model object
+     * @param object player Players model object
+     * @return void nothing
      */
     public function __construct(Teams $team,Players $player)
     {
-        $this->teamModel = $team;
-        $this->playerModel = $player;
+        $this->teamModel = $team;   // object of Teams model
+        $this->playerModel = $player; // object of Players model
     }
     /**
      * @OA\Get(
@@ -50,38 +54,23 @@ class TeamController extends Controller
      *     ),
      * )
      */
+
+    /**
+    * Method is used to fetch team's data
+     * @param int id Team ID
+     * @return object ORM : team data
+     
+     */ 
     public function getTeam($id = null)
     {
       $team_id = $id;
       if($team_id)
       {
-        return $this->teamModel->getTeam($team_id);
+        return $this->teamModel->getTeam($team_id); // return specific team info with players of that team
       }
       else {
-        return $this->teamModel->getAllTeams($team_id);
+        return $this->teamModel->getAllTeams($team_id); // return all teams info with players of that team
       }
 
-    }
-
-    public function createTeam(Request $request)
-    {
-      return $this->teamModel->createTeam($request->all());
-    }
-
-    public function updateTeam(Request $request,$team_id)
-    {
-      return $this->teamModel->updateTeam($team_id,$request->all());
-    }
-
-    public function addTeamPlayer(Request $request)
-    {
-        $team_id = $request->get('team_id');
-        $player_id = $request->get('player_id');
-        return $this->playerModel->updatePlayer($player_id,array('team_id'=>$team_id));
-    }
-
-    public function deleteTeam($team_id)
-    {
-      return $this->teamModel->deleteTeam($team_id);
     }
 }

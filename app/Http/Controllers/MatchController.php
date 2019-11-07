@@ -13,41 +13,40 @@ class MatchController extends Controller
 {
   private $matchModel;
   private $matchValidate;
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+
+  /**
+      * @param object Matches of Matches model.
+      * @param object MatchValidationInterface(dependency inverison principle applied here) MatchValidation class.
+      * To check the actual implementation of the Interface see ServiceProvider class
+      *@return void nothing
+  */
     public function __construct(Matches $obj,MatchValidationInterface $matchValidateObj)
     {
         $this->matchModel = $obj;
         $this->matchValidate = $matchValidateObj;
     }
 
-    public function getMatch($id = null) {
-      $match_id = $id;
-      if($match_id)
-      {
-        return $this->matchModel->getMatch($match_id);
-      }
-      else {
-        return $this->matchModel->getAllMatches($match_id);
-      }
-    }
-
-    /**
-   * Get Match of Each Team
-   *
-   *
-   */
+  /**
+    *Method is used to fetch team specific or all scheduled matches depend on id
+      * @param int id : Optional Match ID
+      * @return object ORM   
+ 
+  */
     public function getMatchTeamWise($id = null) {
       $teamid = $id;
       return $this->matchModel->getMatchTeamWise($teamid,0); //Matches that are scheduled
 
     }
-
+  /**    
+      *Method is used to schedule matches between the teams   
+      * @param object Request Complete request object
+      * @return object response
+      
+  */
     public function createMatch(Request $request)
     {  
+      //Various validations checked here like empty request,invalid teams
+      //Match already scheduled for respective teams on requested dates 
       $emptyFlag = $this->matchValidate->isEmpty($request->all());
 
       if($emptyFlag){
@@ -76,32 +75,15 @@ class MatchController extends Controller
       
     }
 
-    public function updateMatch(Request $request,$team_id)
-    {
-      return $this->matchModel->updatePlayer($team_id,$request->all());
-    }
-
-    public function deleteMatch($team_id)
-    {
-      return $this->matchModel->deletePlayer($team_id);
-    }
-    /**
-   * Get Fixture of Each Team
-   *
-   *
-   */
+  /**
+      *Method is used to fetch team specific or all scheduled matches depend on id
+       *which are completed based on result 
+      * @param int id : Optional Match ID
+      * @return object ORM : match data
+      
+  */
     public function getFixtureTeamWise($id = null) {
       $teamid = $id;
        return $this->matchModel->getMatchTeamWise($teamid,1); //Matches that are scheduled
     }
-
- /*   public function setTeamPlayer($teamid, $playerid) {
-
-    }*/
-
-    // public function
-
-
-
-    //
 }

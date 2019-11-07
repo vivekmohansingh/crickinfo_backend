@@ -14,11 +14,21 @@ class MatchValidation implements MatchValidationInterface
 
 private $matchModelObj;
 private $teamObj;
+/**
+  * @param object obj Match model object
+  * @param object teamobj Team wrapper object
+  * @return void nothing 
+*/
 public function __construct(Matches $obj,TeamInterface $teamobj){
  $this->matchModelObj = $obj;
  $this->teamObj = $teamobj;
 }
-
+/**
+  *  Method is used to check empty attribute
+  * @param array attributes Input request
+  * @return boolean true/false
+s
+*/
 public  function isEmpty(array $attributes){
  foreach($attributes as $value){
  	if(!isset($value)){
@@ -28,7 +38,12 @@ public  function isEmpty(array $attributes){
 
  return false;
 }
-
+/**
+  *Method is used to check valid teamids,avoid match between same team
+  * @param array attributes Input request
+  * @return array contains HTTP status code and status
+  
+*/
 public function validateInputs(array $attributes){
 $teamId1 = (int)$attributes['team1_id'];
 $teamId2 = (int)$attributes['team2_id'];
@@ -54,7 +69,12 @@ $scheduleTime = (string)$attributes['schedule_time'];
  	}
  return array('out' => true,'errorcode' => 0);
 }
+/**
+*  Method is used to avoid match schedule in case already scheduled on same date for any requested team
+  * @param array attributes Input request
+  * @return int 0 or more
 
+*/
 public function checkIfMatchAlreadyExists(array $attributes){
   $out = $this->matchModelObj->checkAlreadyMatchOnSameDate($attributes); 
   return $out;
